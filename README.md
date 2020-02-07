@@ -18,6 +18,9 @@ license: ""
 Authentication token for Controller
 controller_auth_token: ""
 
+The FQDN / hostname of your Controller server
+controller_fqdn: ""
+
 Dependencies
 ------------
 

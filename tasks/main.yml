@@ -6,10 +6,11 @@
   with_items:
     - license
     - controller_auth_token
+    - controller_fqdn
 
 - name: POST controller license
   uri:
-    url: "https://{{fqdn}}/api/v1/platform/license-file"
+    url: "https://{{controller_fqdn}}/api/v1/platform/license-file"
     method: POST
     body: 
       content: "{{ license }}"
@@ -23,7 +24,7 @@
 
 - name: GET controller license status
   uri:
-    url: "https://{{fqdn}}/api/v1/platform/license"
+    url: "https://{{controller_fqdn}}/api/v1/platform/license"
     method: GET
     status_code: 200
     validate_certs: false
