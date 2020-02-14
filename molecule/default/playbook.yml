@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+
+  vars:
+  #   controller_fqdn:
+  #   license:
+  #   user_email:
+  #   user_password:
+
+  tasks:
+    - include_role:
+        name: ansible-role-nginx-controller-license
+
+  post_tasks:
+    - debug:
+        msg: "{{ controller_license }}"

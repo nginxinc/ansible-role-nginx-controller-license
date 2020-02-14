@@ -1,2 +1,8 @@
 ---
-# vars file for ansible-role-nginx-controller-license
+## Required Vars
+# Base64 encoded string of your NGINX Controller license file
+# license: ""
+# Authentication token for NGINX Controller
+# controller_auth_token: ""
+# The FQDN of the controller server. ex: 10.20.30.40 or controller.example.com
+# controller_fqdn: ""

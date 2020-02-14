@@ -1,5 +1,4 @@
 ---
-# tasks file for ansible-role-nginx-controller-license
 - name: Fail if required variables are not defined
   assert:
     that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
@@ -8,26 +7,26 @@
     - controller_auth_token
     - controller_fqdn
 
-- name: POST controller license
+- name: POST NGINX Controller license
   uri:
-    url: "https://{{controller_fqdn}}/api/v1/platform/license-file"
+    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
-    body: 
+    body:
       content: "{{ license }}"
     body_format: json
-    return_content: yes
+    return_content: true
     status_code: 200
     validate_certs: false
     headers:
-      Cookie: "{{controller_auth_token}}"
+      Cookie: "{{ controller_auth_token }}"
   register: controller_response
 
-- name: GET controller license status
+- name: GET NGINX Controller license status
   uri:
-    url: "https://{{controller_fqdn}}/api/v1/platform/license"
+    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license"
     method: GET
     status_code: 200
     validate_certs: false
     headers:
-      Cookie: "{{controller_auth_token}}"
+      Cookie: "{{ controller_auth_token }}"
   register: controller_license

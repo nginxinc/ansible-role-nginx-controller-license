@@ -1,25 +1,22 @@
-Role Name
-=========
+NGINX Controller License
+========================
 
-A brief description of the role goes here.
+A role to push an NGINX Controller license to your NGINX Controller platform.
 
 Requirements
 ------------
 
-NGINX Controller
-NGINX Controller license file
+*   [NGINX Controller](https://www.nginx.com/products/nginx-controller/)
+*   NGINX Controller license file
 
 Role Variables
 --------------
 
-base64 encoded string of your Controller license file
-license: ""
+`license` - A base64 encoded string of your NGINX Controller license file.
 
-Authentication token for Controller
-controller_auth_token: ""
+`controller_fqdn` - The FQDN / hostname of your Controller server.
 
-The FQDN / hostname of your Controller server
-controller_fqdn: ""
+`controller_auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx-controller-generate-token` role to set this variable.
 
 Dependencies
 ------------
@@ -29,29 +26,35 @@ none
 Example Playbook
 ----------------
 
-# ansible-playbook nginx_controller_license.yaml -i controller -e "admin_email=user@company.com admin_password=userPassword" 
-# ansible-playbook nginx_controller_license.yaml -e "@nginx_install_controller_vars.yaml"
-
+```yaml
 - hosts: localhost
   gather_facts: no
 
   vars:
-    # base64 encoded, one line, no line endings or carrage returns
+    controller_fqdn: controller.mydomain.com
+    # NGINX Controller license role vars
+    # base64 encoded, one line, no line endings or carriage returns
     license: "{{ lookup('file', 'license/controller_license.base64.txt') }}"
+    # Only required if NGINX Controller generate token role is not used
+    # controller_auth_token: <token>
+    # NGINX Controller generate token role vars
+    user_email: user@example.com
+    user_password: mySecurePassword
 
   tasks:
-  - include_role:
-      name: ansible-role-nginx-controller-generate-token
+    - include_role:
+        name: nginxinc.nginx-controller-generate-token
 
-  - include_role:
-      name: ansible-role-nginx-controller-license
+    - include_role:
+        name: nginxinc.nginx-controller-license
+```
 
 License
 -------
 
-Apache
+[Apache License, Version 2.0](./LICENSE)
 
 Author Information
 ------------------
 
-BrianEhlert
+brianehlert

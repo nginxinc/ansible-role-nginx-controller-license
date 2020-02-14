@@ -1,2 +1,2 @@
 ---
-# defaults file for ansible-role-nginx-controller-license
+api_version: "api/v1"
