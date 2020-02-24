@@ -1,8 +1,6 @@
 ---
-## Required Vars
-# Base64 encoded string of your NGINX Controller license file
-# license: ""
-# Authentication token for NGINX Controller
-# controller_auth_token: ""
-# The FQDN of the NGINX Controller server. ex: 10.20.30.40 or controller.example.com
-# controller_fqdn: ""
+## All the below variables are REQUIRED
+
+# license:  # Base64 encoded string of your NGINX Controller license file
+# controller_fqdn:  # FQDN of the NGINX Controller instance
+# controller_auth_token:  Authentication token for NGINX Controller

@@ -7,12 +7,14 @@ Requirements
 ------------
 
 *   [NGINX Controller](https://www.nginx.com/products/nginx-controller/)
-*   NGINX Controller license file
+*   [NGINX Controller](https://www.nginx.com/products/nginx-controller/) license file
 
 Role Variables
 --------------
 
-`license` - A base64 encoded string of your NGINX Controller license file.
+-- All the below variables are required --
+
+`license` - A base64 encoded string of your NGINX Controller license file. Has to be one line, with no line endings or carriage returns.
 
 `controller_fqdn` - The FQDN / hostname of your Controller server.
 
@@ -26,27 +28,27 @@ none
 Example Playbook
 ----------------
 
+To use this role you can create a playbook such as the following:
+
 ```yaml
 - hosts: localhost
   gather_facts: no
 
-  vars:
-    controller_fqdn: controller.mydomain.com
-    # NGINX Controller license role vars
-    # base64 encoded, one line, no line endings or carriage returns
-    license: "{{ lookup('file', 'license/controller_license.base64.txt') }}"
-    # Only required if NGINX Controller generate token role is not used
-    # controller_auth_token: <token>
-    # NGINX Controller generate token role vars
-    user_email: user@example.com
-    user_password: mySecurePassword
-
   tasks:
-    - include_role:
+    - name: Retrieve the NGINX Controller auth token
+      include_role:
         name: nginxinc.nginx-controller-generate-token
+      vars:
+        user_email: "user@example.com"
+        user_password: "mySecurePassword"
+        controller_fqdn: "controller.mydomain.com"
 
-    - include_role:
+    - name: Push the NGINX Controller license to your instance
+      include_role:
         name: nginxinc.nginx-controller-license
+      vars:
+        # controller_auth_token: output by previous role in example
+        license: "{{ lookup('file', 'license/controller_license.base64.txt') }}"
 ```
 
 License
@@ -57,4 +59,8 @@ License
 Author Information
 ------------------
 
-brianehlert
+[Brian Ehlert](https://github.com/brianehlert)
+
+[Alessandro Fael Garcia](https://github.com/alessfg)
+
+&copy; [NGINX, Inc.](https://www.nginx.com/) 2020

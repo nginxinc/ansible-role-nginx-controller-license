@@ -10,7 +10,7 @@
 
   tasks:
     - include_role:
-        name: ansible_role_nginx_controller_license
+        name: ansible-role-nginx-controller-license
 
   post_tasks:
     - debug:
