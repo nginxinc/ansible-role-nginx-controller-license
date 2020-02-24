@@ -4,5 +4,5 @@
 # license: ""
 # Authentication token for NGINX Controller
 # controller_auth_token: ""
-# The FQDN of the controller server. ex: 10.20.30.40 or controller.example.com
+# The FQDN of the NGINX Controller server. ex: 10.20.30.40 or controller.example.com
 # controller_fqdn: ""

@@ -3,14 +3,14 @@
   hosts: all
 
   vars:
-  #   controller_fqdn:
-  #   license:
-  #   user_email:
-  #   user_password:
+  #   controller_fqdn: ""
+  #   license: ""
+  #   user_email: ""
+  #   user_password: ""
 
   tasks:
     - include_role:
-        name: ansible-role-nginx-controller-license
+        name: ansible_role_nginx_controller_license
 
   post_tasks:
     - debug:
