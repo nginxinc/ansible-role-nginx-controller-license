@@ -14,7 +14,7 @@ Role Variables
 
 -- All the below variables are required --
 
-`license` - A base64 encoded string of your NGINX Controller license file. Has to be one line, with no line endings or carriage returns.
+`license` - A base64 encoded string of your NGINX Controller license file. Has to be one line, with no line endings or carriage returns. The below example uses the b64encode filter to do this encoding. 
 
 `controller_fqdn` - The FQDN / hostname of your Controller server.
 
@@ -37,7 +37,7 @@ To use this role you can create a playbook such as the following:
   tasks:
     - name: Retrieve the NGINX Controller auth token
       include_role:
-        name: nginxinc.nginx-controller-generate-token
+        name: nginxinc.nginx_controller_generate_token
       vars:
         user_email: "user@example.com"
         user_password: "mySecurePassword"
@@ -45,10 +45,10 @@ To use this role you can create a playbook such as the following:
 
     - name: Push the NGINX Controller license to your instance
       include_role:
-        name: nginxinc.nginx-controller-license
+        name: nginxinc.nginx_controller_license
       vars:
         # controller_auth_token: output by previous role in example
-        license: "{{ lookup('file', 'license/controller_license.base64.txt') }}"
+        license: "{{ lookup('file', 'license/controller_license.txt') | b64encode }}"
 ```
 
 License
