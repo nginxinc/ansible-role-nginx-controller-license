@@ -4,29 +4,29 @@
     that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
   loop:
     - license
-    - controller_auth_token
-    - controller_fqdn
+    - controller.auth_token
+    - controller.fqdn
 
 - name: POST NGINX Controller license
   uri:
-    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
+    url: "https://{{ controller.fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body:
       content: "{{ license }}"
     body_format: json
     return_content: true
     status_code: 200
-    validate_certs: false
+    validate_certs: "{{ controller.validate_certs | default(false) }}"
     headers:
-      Cookie: "{{ controller_auth_token }}"
+      Cookie: "{{ controller.auth_token }}"
   register: controller_response
 
 - name: GET NGINX Controller license status
   uri:
-    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license"
+    url: "https://{{ controller.fqdn }}/{{ api_version }}/platform/license"
     method: GET
     status_code: 200
-    validate_certs: false
+    validate_certs: "{{ controller.validate_certs | default(false) }}"
     headers:
-      Cookie: "{{ controller_auth_token }}"
+      Cookie: "{{ controller.auth_token }}"
   register: controller_license
