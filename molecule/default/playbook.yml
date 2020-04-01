@@ -3,10 +3,11 @@
   hosts: all
 
   vars:
-  #   controller_fqdn: ""
-  #   license: ""
-  #   user_email: ""
-  #   user_password: ""
+  #  controller:
+  #    fqdn: ""
+  #    license: ""
+  #    user_email: ""
+  #    user_password: ""
 
   tasks:
     - include_role:
