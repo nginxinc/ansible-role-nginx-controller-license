@@ -16,9 +16,9 @@ Role Variables
 
 `license` - A base64 encoded string of your NGINX Controller license file. Has to be one line, with no line endings or carriage returns. The below example uses the b64encode filter to do this encoding. 
 
-`controller_fqdn` - The FQDN / hostname of your Controller server.
+`controller.fqdn` - The FQDN / hostname of your Controller server.
 
-`controller_auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx-controller-generate-token` role to set this variable.
+`controller.auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx-controller-generate-token` role to set this variable.
 
 Dependencies
 ------------
@@ -34,6 +34,13 @@ To use this role you can create a playbook such as the following:
 - hosts: localhost
   gather_facts: no
 
+  vars:
+    controller:
+      user_email: "user@example.com"
+      user_password: "mySecurePassword"
+      fqdn: "controller.mydomain.com"
+      validate_certs: false
+
   tasks:
     - name: Retrieve the NGINX Controller auth token
       include_role:
@@ -47,7 +54,7 @@ To use this role you can create a playbook such as the following:
       include_role:
         name: nginxinc.nginx_controller_license
       vars:
-        # controller_auth_token: output by previous role in example
+        # controller.auth_token: output by previous role in example
         license: "{{ lookup('file', 'license/controller_license.txt') | b64encode }}"
 ```
 
@@ -62,5 +69,7 @@ Author Information
 [Brian Ehlert](https://github.com/brianehlert)
 
 [Alessandro Fael Garcia](https://github.com/alessfg)
+
+[Daniel Edgar](https://github.com/aknot242)
 
 &copy; [NGINX, Inc.](https://www.nginx.com/) 2020
