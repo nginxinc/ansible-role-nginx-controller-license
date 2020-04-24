@@ -3,30 +3,30 @@
   assert:
     that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
   loop:
-    - license
-    - controller.auth_token
-    - controller.fqdn
+    - nginx_controller_license
+    - nginx_controller_auth_token
+    - nginx_controller_fqdn
 
 - name: POST NGINX Controller license
   uri:
-    url: "https://{{ controller.fqdn }}/{{ api_version }}/platform/license-file"
+    url: "https://{{ nginx_controller_fqdn }}/{{ nginx_controller_api_version }}/platform/license-file"
     method: POST
     body:
-      content: "{{ license }}"
+      content: "{{ nginx_controller_license }}"
     body_format: json
     return_content: true
     status_code: 200
-    validate_certs: "{{ controller.validate_certs | default(false) }}"
+    validate_certs: "{{ nginx_controller_validate_certs | default(false) }}"
     headers:
-      Cookie: "{{ controller.auth_token }}"
-  register: controller_response
+      Cookie: "{{ nginx_controller_auth_token }}"
+  register: nginx_controller_response
 
 - name: GET NGINX Controller license status
   uri:
-    url: "https://{{ controller.fqdn }}/{{ api_version }}/platform/license"
+    url: "https://{{ nginx_controller_fqdn }}/{{ nginx_controller_api_version }}/platform/license"
     method: GET
     status_code: 200
-    validate_certs: "{{ controller.validate_certs | default(false) }}"
+    validate_certs: "{{ nginx_controller_validate_certs | default(false) }}"
     headers:
-      Cookie: "{{ controller.auth_token }}"
-  register: controller_license
+      Cookie: "{{ nginx_controller_auth_token }}"
+  register: nginx_controller_license

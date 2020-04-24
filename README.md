@@ -14,11 +14,11 @@ Role Variables
 
 -- All the below variables are required --
 
-`license` - A base64 encoded string of your NGINX Controller license file. Has to be one line, with no line endings or carriage returns. The below example uses the b64encode filter to do this encoding. 
+`nginx_controller_license` - A base64 encoded string of your NGINX Controller license file. Has to be one line, with no line endings or carriage returns. The below example uses the b64encode filter to do this encoding. 
 
-`controller.fqdn` - The FQDN / hostname of your Controller server.
+`nginx_controller_fqdn` - The FQDN / hostname of your Controller server.
 
-`controller.auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx-controller-generate-token` role to set this variable.
+`nginx_controller_auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx_controller_generate_token` role to set this variable.
 
 Dependencies
 ------------
@@ -35,27 +35,22 @@ To use this role you can create a playbook such as the following:
   gather_facts: no
 
   vars:
-    controller:
-      user_email: "user@example.com"
-      user_password: "mySecurePassword"
-      fqdn: "controller.mydomain.com"
-      validate_certs: false
+    nginx_controller_user_email: "user@example.com"
+    nginx_controller_user_password: "mySecurePassword"
+    nginx_controller_fqdn: "controller.mydomain.com"
+    nginx_controller_validate_certs: false
 
   tasks:
     - name: Retrieve the NGINX Controller auth token
       include_role:
         name: nginxinc.nginx_controller_generate_token
-      vars:
-        user_email: "user@example.com"
-        user_password: "mySecurePassword"
-        controller_fqdn: "controller.mydomain.com"
 
     - name: Push the NGINX Controller license to your instance
       include_role:
         name: nginxinc.nginx_controller_license
       vars:
         # controller.auth_token: output by previous role in example
-        license: "{{ lookup('file', 'license/controller_license.txt') | b64encode }}"
+        nginx_controller_license: "{{ lookup('file', 'license/controller_license.txt') | b64encode }}"
 ```
 
 License
