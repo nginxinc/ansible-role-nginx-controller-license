@@ -3,6 +3,7 @@ galaxy_info:
   author: Brian Ehlert
   description: A role to push an NGINX Controller license to your NGINX Controller platform.
   company: F5 Networks, Inc.
+  role_name: nginx_controller_licence
 
   license: Apache License, Version 2.0
 
