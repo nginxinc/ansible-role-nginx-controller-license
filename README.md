@@ -53,6 +53,13 @@ To use this role you can create a playbook such as the following:
         nginx_controller_license: "{{ lookup('file', 'license/controller_license.txt') | b64encode }}"
 ```
 
+You can then run `ansible-playbook nginx_controller_license.yaml` to execute the playbook.
+
+Alternatively, you can also pass/override any variables at run time using the `--extra-vars` or `-e` flag like so `ansible-playbook nginx_controller_license.yaml -e "nginx_controller_user_email=user@company.com nginx_controller_user_password=notsecure nginx_controller_fqdn=controller.example.local nginx_controller_validate_certs=false"`
+
+You can also pass/override any variables by passing a `yaml` file containing any number of variables like so `ansible-playbook nginx_controller_component.yaml -e "@nginx_controller_license_vars.yaml"`
+
+
 License
 -------
 
