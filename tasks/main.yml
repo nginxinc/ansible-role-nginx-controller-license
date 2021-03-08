@@ -7,15 +7,20 @@
     - nginx_controller_auth_token
     - nginx_controller_fqdn
 
-- name: POST NGINX Controller license
+- name: PUT NGINX Controller license
   uri:
-    url: "https://{{ nginx_controller_fqdn }}/{{ nginx_controller_api_version }}/platform/license-file"
-    method: POST
+    url: "https://{{ nginx_controller_fqdn }}/{{ nginx_controller_api_version }}/platform/license"
+    method: PUT
     body:
-      content: "{{ nginx_controller_license }}"
+      metadata:
+        name: license
+      desiredState:
+        content: "{{ nginx_controller_license }}"
     body_format: json
     return_content: true
-    status_code: 200
+    status_code:
+      - 200
+      - 202
     validate_certs: "{{ nginx_controller_validate_certs | default(false) }}"
     headers:
       Cookie: "{{ nginx_controller_auth_token }}"
