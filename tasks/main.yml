@@ -13,7 +13,7 @@
     method: PUT
     body:
       metadata:
-        name: "license"
+        name: license
       desiredState:
         content: "{{ nginx_controller_license }}"
     body_format: json
