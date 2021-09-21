@@ -10,11 +10,3 @@
         nginx_controller_validate_certs: false
         nginx_controller_auth_token: "TokenABC123"
         nginx_controller_license: "LicenseABC123"
-
-    # - name: Save Auth Token variable to a file on the mock server so we can consume it in the verify playbook
-    #   copy:
-    #     content: "{{ nginx_controller_auth_token }}"
-    #     dest: "/tmp/verify-variable"
-    #     mode: 0644
-    #   changed_when: false
-    #   delegate_to: mock-server

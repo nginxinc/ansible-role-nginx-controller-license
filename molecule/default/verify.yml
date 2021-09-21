@@ -18,13 +18,3 @@
         headers:
           Content-Type: application/json
         validate_certs: false
-
-    # - name: Copy variable value collected in converge playbook to a fact
-    #   command: "cat /tmp/verify-variable"
-    #   delegate_to: mock-server
-    #   register: var
-    #   changed_when: false
-
-    # - name: Compare Auth Token fact with known good value
-    #   assert:
-    #     that: var.stdout == "session=.eJwlzjEOwzAIQNG7MGcA22DIZSKbgNI1aaaqd2-kLn96w; HttpOnly; Secure; Path=/"
