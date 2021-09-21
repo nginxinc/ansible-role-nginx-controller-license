@@ -1,0 +1,156 @@
+---
+- name: Prepare Mock Server
+  hosts: mock_server
+  become: true
+  tasks:
+    - name: Start mock server
+      raw: "nohup java -Dfile.encoding=UTF-8 -cp /mockserver-netty-jar-with-dependencies.jar:/libs/* -Dmockserver.propertyFile=/mockserver.properties org.mockserver.cli.Main -serverPort 1080 </dev/null >/dev/null 2>&1 & sleep 1"
+      changed_when: false
+
+- name: Set Expectations
+  hosts: mock_server
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Reset mock server expectations
+      uri:
+        url: "https://{{ inventory_hostname }}:1080/mockserver/reset"
+        method: PUT
+        status_code: 200
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+
+    - name: Create license api PUT expectation
+      uri:
+        url: "https://{{ inventory_hostname }}:1080/mockserver/expectation"
+        method: PUT
+        body:
+          httpRequest:
+            method: "PUT"
+            path: "/api/v1/platform/license"
+          httpResponse:
+            statusCode: 202
+            body:
+              currentStatus:
+                entitlement:
+                  features:
+                    - expiry: '2022-01-15T00:00:00Z'
+                      gracePeriodDays: 60
+                      id: ADC
+                      limit: 100
+                      name: NGINX Controller ADC
+                      type: PAID
+                      unitOfMeasure: WORKLOADS
+                items:
+                  - expiry: '2022-01-15T00:00:00Z'
+                    id: ADC
+                    instanceCount: 250
+                    product: NGINX Controller ADC
+                    serial: 123456789
+                    type: PAID
+                    version: 2
+                state:
+                  currentInstance:
+                    configState:
+                      conditions: []
+                      selfConfigState:
+                        isConfigured: true
+                        isConfiguring: false
+                        isDeleting: false
+                        isError: false
+                    features:
+                      - daysUntilExpiry: 116
+                        gracePeriodRemainingDays: 60
+                        id: ADC
+                        name: NGINX Controller ADC
+                        unitOfMeasure: WORKLOADS
+                    status: VALID
+                    type: NGINX Controller
+                    version: 3.20.0
+                subscription:
+                  id: subscription-is
+              desiredState:
+                content: "******"
+                items:
+                  - expiry: '2022-01-15T00:00:00Z'
+                    id: ADC
+                    instanceCount: 250
+                    product: NGINX Controller ADC
+                    serial: 123456789
+                    type: PAID
+                    version: 2
+              metadata:
+                name: license
+        status_code: 201
+        body_format: json
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+
+    - name: Create license api GET expectation
+      uri:
+        url: "https://{{ inventory_hostname }}:1080/mockserver/expectation"
+        method: PUT
+        body:
+          httpRequest:
+            method: "GET"
+            path: "/api/v1/platform/license"
+          httpResponse:
+            statusCode: 200
+            body:
+              currentStatus:
+                entitlement:
+                  features:
+                    - expiry: '2022-01-15T00:00:00Z'
+                      gracePeriodDays: 60
+                      id: ADC
+                      limit: 100
+                      name: NGINX Controller ADC
+                      type: PAID
+                      unitOfMeasure: WORKLOADS
+                items:
+                  - expiry: '2022-01-15T00:00:00Z'
+                    id: ADC
+                    instanceCount: 250
+                    product: NGINX Controller ADC
+                    serial: 123456789
+                    type: PAID
+                    version: 2
+                state:
+                  currentInstance:
+                    configState:
+                      conditions: []
+                      selfConfigState:
+                        isConfigured: true
+                        isConfiguring: false
+                        isDeleting: false
+                        isError: false
+                    features:
+                      - daysUntilExpiry: 116
+                        gracePeriodRemainingDays: 60
+                        id: ADC
+                        name: NGINX Controller ADC
+                        unitOfMeasure: WORKLOADS
+                    status: VALID
+                    type: NGINX Controller
+                    version: 3.20.0
+                subscription:
+                  id: subscription-is
+              desiredState:
+                content: "******"
+                items:
+                  - expiry: '2022-01-15T00:00:00Z'
+                    id: ADC
+                    instanceCount: 250
+                    product: NGINX Controller ADC
+                    serial: 123456789
+                    type: PAID
+                    version: 2
+              metadata:
+                name: license
+        status_code: 201
+        body_format: json
+        headers:
+          Content-Type: application/json
+        validate_certs: false

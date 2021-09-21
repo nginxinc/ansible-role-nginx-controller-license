@@ -1,0 +1,30 @@
+---
+- name: Verify
+  hosts: mock_server
+  connection: local
+  tasks:
+    - name: Check that the license request was sent to the mock controller exactly 4 times per docker instance (includes the idempotence test)
+      uri:
+        url: "https://{{ inventory_hostname }}:1080/mockserver/verify"
+        method: PUT
+        body:
+          httpRequest:
+            path: "/api/v1/platform/license"
+          times:
+            atLeast: 4
+            atMost: 4
+        status_code: 202
+        body_format: json
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+
+    # - name: Copy variable value collected in converge playbook to a fact
+    #   command: "cat /tmp/verify-variable"
+    #   delegate_to: mock-server
+    #   register: var
+    #   changed_when: false
+
+    # - name: Compare Auth Token fact with known good value
+    #   assert:
+    #     that: var.stdout == "session=.eJwlzjEOwzAIQNG7MGcA22DIZSKbgNI1aaaqd2-kLn96w; HttpOnly; Secure; Path=/"

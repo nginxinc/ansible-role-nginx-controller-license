@@ -4,6 +4,7 @@ galaxy_info:
   description: A role to push an NGINX Controller license to your NGINX Controller platform.
   company: F5 Networks, Inc.
   role_name: nginx_controller_license
+  namespace: nginxinc
 
   license: Apache License, Version 2.0
 
