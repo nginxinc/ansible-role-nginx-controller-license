@@ -18,7 +18,7 @@ Role Variables
 
 `nginx_controller_fqdn` - The FQDN / hostname of your Controller server.
 
-`nginx_controller_auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx_controller_generate_token` role to set this variable.
+`nginx_controller_auth_token` - Authentication token for NGINX Controller. You can use the `nginxinc.nginx_controller_license` role to set this variable.
 
 Dependencies
 ------------
@@ -43,7 +43,7 @@ To use this role you can create a playbook such as the following:
   tasks:
     - name: Retrieve the NGINX Controller auth token
       include_role:
-        name: nginxinc.nginx_controller_generate_token
+        name: nginxinc.nginx_controller_license
 
     - name: Push the NGINX Controller license to your instance
       include_role:
