@@ -1,6 +1,8 @@
 NGINX Controller License
 ========================
 
+# This repository has been archived. There will likely be no further development on the project and security vulnerabilities may be unaddressed.
+
 A role to push an NGINX Controller license to your NGINX Controller platform.
 
 Requirements
